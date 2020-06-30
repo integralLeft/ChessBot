@@ -153,6 +153,27 @@ class Game(commands.Cog):
                 await self.draw_message.add_reaction('✅')
                 await self.draw_message.add_reaction('❌')
                 reacted = False
+                print("the message is game.draw_message!")
+                reactionlist = ['✅', '❌']
+                def check(reaction, user):
+                    print('checking for reaction validity...')
+                    return user == self.bot.get_user(self.opposingPlayer.id) and str(reaction) in reactionlist
+                try:
+                    print('trying to wait for reaction...')
+                    reaction, user = await self.bot.wait_for('reaction_add', timeout=20.0, check=check)
+                except asyncio.TimeoutError:
+                    print('draw offer timed out...')
+                    await self.draw_message.channel.send('Draw offer timed out.', delete_after=5)
+                else:
+                    print('made it to the else block...')
+                    if str(reaction) == reactionlist[0]:
+                        await self.draw_message.delete()
+                        embed_title = 'Game over. ' + str(self.player.username) + ' and ' + str(self.opposingPlayer.username) + ' have agreed to a draw.'
+                        await self.Update_Message(ctx, embed_title=embed_title, edit=True)
+                        self.Reset()
+                    elif str(reaction) == reactionlist[1]:
+                        await self.draw_message.delete()
+                        await self.draw_message.channel.send('Draw offer declined.', delete_after=5)
         elif move == 'resign' and (player_is_opposing_player or player_is_current_player):
             if self.is_first_upload:
                 await self.first_message.delete()
@@ -250,8 +271,8 @@ class Game(commands.Cog):
                 self.last_move = move
                 self.board.push_san(move)
                 self.Take_Turn()
-                color = "white" if player != self.white else "black"
-                self.nextuser = self.white.username if player != self.white else self.black.username
+                color = "white" if self.player != self.white else "black"
+                self.nextuser = self.white.username if self.player != self.white else self.black.username
                 self.Get_Picture(color)
                 if self.board.is_game_over() == True:
                     embed_title = 'Game over. {}'.format(self.board.result())
@@ -268,6 +289,33 @@ class Game(commands.Cog):
                         await self.Update_Message(ctx, embed_title=embed_title, edit=True)
             except ValueError:
                 await ctx.message.channel.send('{} is an illegal move, {}'.format(move, ctx.message.author), delete_after=5)
+
+"""
+@bot.event
+async def on_message(message):
+    if message == game.draw_message:
+        print("the message is game.draw_message!")
+        reactionlist = ['✅', '❌']
+        def check(reaction, user):
+            print('checking for reaction validity...')
+            return user == bot.get_user(game.opposingPlayer.id) and str(reaction) in reactionlist
+        try:
+            print('trying to wait for reaction...')
+            reaction, user = await bot.wait_for('reaction_add', timeout=20.0, check=check)
+        except asyncio.TimeoutError:
+            print('draw offer timed out...')
+            await game.draw_message.channel.send('Draw offer timed out.', delete_after=5)
+        else:
+            print('made it to the else block...')
+            if str(reaction) == reactionlist[0]:
+                await game.draw_message.delete()
+                embed_title = 'Game over. ' + str(game.player.username) + ' and ' + str(game.opposingPlayer.username) + ' have agreed to a draw.'
+                await game.Update_Message(ctx, embed_title=embed_title, edit=True)
+                self.Reset()
+            elif str(reaction) == reactionlist[1]:
+                await game.draw_message.delete()
+                await game.draw_message.channel.send('Draw offer declined.', delete_after=5)
+"""
 
 def setup(bot):
     bot.add_cog(Game(bot))

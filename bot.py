@@ -43,25 +43,33 @@ async def on_ready():
     print(bot.user.id)
     print('-----')
 
+"""
 @bot.event
-async def on_reaction_add(reaction, user):
+async def on_message(message):
     game = bot.get_cog('Game')
-    reactionlist = ['✅', '❌']
-    def check(reaction, user):
-        return reaction.message == game.draw_message and user == bot.get_user(game.opposingPlayer.id) and str(reaction) in reactionlist
-    try:
-        reaction, user = await bot.wait_for('reaction_add', timeout=20.0, check=check)
-    except asyncio.TimeoutError:
-        await game.draw_message.channel.send('Draw offer timed out.', delete_after=5)
-    else:
-        if str(reaction) == reactionlist[0]:
-            await game.draw_message.delete()
-            embed_title = 'Game over. ' + str(game.player.username) + ' and ' + str(game.opposingPlayer.username) + ' have agreed to a draw.'
-            await game.Update_Message(ctx, embed_title=embed_title, edit=True)
-            self.Reset()
-        elif str(reaction) == reactionlist[1]:
-            await game.draw_message.delete()
-            await game.draw_message.channel.send('Draw offer declined.', delete_after=5)
+    if message == game.draw_message:
+        print("the message is game.draw_message!")
+        reactionlist = ['✅', '❌']
+        def check(reaction, user):
+            print('checking for reaction validity...')
+            return user == bot.get_user(game.opposingPlayer.id) and str(reaction) in reactionlist
+        try:
+            print('trying to wait for reaction...')
+            reaction, user = await bot.wait_for('reaction_add', timeout=20.0, check=check)
+        except asyncio.TimeoutError:
+            print('draw offer timed out...')
+            await game.draw_message.channel.send('Draw offer timed out.', delete_after=5)
+        else:
+            print('made it to the else block...')
+            if str(reaction) == reactionlist[0]:
+                await game.draw_message.delete()
+                embed_title = 'Game over. ' + str(game.player.username) + ' and ' + str(game.opposingPlayer.username) + ' have agreed to a draw.'
+                await game.Update_Message(ctx, embed_title=embed_title, edit=True)
+                self.Reset()
+            elif str(reaction) == reactionlist[1]:
+                await game.draw_message.delete()
+                await game.draw_message.channel.send('Draw offer declined.', delete_after=5)
+"""
 
 @bot.event
 async def on_message(message):
