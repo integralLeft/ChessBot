@@ -68,7 +68,7 @@ class Game(commands.Cog):
         embed.set_image(url="attachment://image.png")
         self.burner_channel = self.bot.get_channel(727054721789198357)
         latest_image = await self.burner_channel.send(file=file, embed=embed)
-        embed=discord.Embed(title=embed_title, description='Last move: ' + self.last_move)
+        embed=discord.Embed(title=embed_title, description='Last move: ' + self.last_move, color=0xb35600)
         embed.set_image(url=latest_image.embeds[0].image.url)
         footer_text = "White: {}".format(self.white.username) + "\nBlack: {}".format(self.black.username)
         embed.set_footer(text=footer_text)
