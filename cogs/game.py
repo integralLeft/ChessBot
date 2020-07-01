@@ -178,8 +178,8 @@ class Game(commands.Cog):
                 self.Reset()
         else:
             try:
-                self.last_move = move
                 self.board.push_san(move)
+                self.last_move = move
                 self.Take_Turn()
                 color = "white" if self.player != self.white else "black"
                 self.nextuser = self.white.username if self.player != self.white else self.black.username
