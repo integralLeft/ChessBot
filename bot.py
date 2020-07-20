@@ -42,6 +42,8 @@ async def on_ready():
     print(bot.user.name)
     print(bot.user.id)
     print('-----')
+    game = discord.Game("chess")
+    await client.change_presence(activity=game)
 
 """
 @bot.event
@@ -102,8 +104,7 @@ if __name__ == '__main__':
         except Exception as e:
             print('Failed to load extension {}\n{}: {}'.format(extension, type(e).__name__,e))
     bot.run(TOKEN, bot=True, reconnect=True)
-    game = discord.Game("chess")
-    await client.change_presence(activity=game)
+
     #handlers = log.handlers[:]
     #for hdlr in handlers:
         #hdlr.close()
