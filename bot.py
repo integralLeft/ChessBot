@@ -43,7 +43,7 @@ async def on_ready():
     print(bot.user.id)
     print('-----')
     game = discord.Game("chess")
-    await client.change_presence(activity=game)
+    await bot.change_presence(activity=game)
 
 """
 @bot.event
