@@ -13,6 +13,8 @@ import ast
 from io import StringIO
 import contextlib
 
+import subprocess
+
 import os
 import discord
 from dotenv import load_dotenv
