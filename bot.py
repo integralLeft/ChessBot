@@ -158,7 +158,8 @@ async def on_message(message):
         start_expr_index = content.index('evaluate(') + len('evaluate(')
         end_expr_index = content.find(')', start_expr_index)
         expression = content[start_expr_index:end_expr_index]
-        await message.channel.send(ast.literal_eval(expression))
+        result = eval(expression)
+        await message.channel.send(result)
 
 
 
