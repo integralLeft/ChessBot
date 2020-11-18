@@ -113,13 +113,13 @@ servers = {
 }
 
 @bot.command(name='send')
-async def send(ctx, guild, channel):
+async def send(ctx, guild, channel, message):
     if ctx.guild != bot.get_guild(542493635757867037):
         return
     # message contains the arguments of channel, server
     channel = bot.get_channel(servers[guild][channel])
     response = 'Hi, <@' + str(ctx.author.id) + '>!'
-    response += 'Thanks for your message, "' + ctx + '".'
+    response += 'Thanks for your message, "' + message + '".'
     await ctx.send(response, delete_after=5)
 
 """
