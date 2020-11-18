@@ -174,8 +174,12 @@ async def on_message(message):
         await message.channel.send(result)
     # exec rarted output shit
     elif content.find('exec(') != -1:
+        print('inline message received!')
+        start_expr_index = content.index('exec(') + len('exec(')
+        end_expr_index = content.find(')', start_expr_index)
+        expression = content[start_expr_index:end_expr_index]
         with stdoutIO() as s:
-            exec(message)
+            exec(expression)
         await message.channel.send(s.getvalue())
 
 
