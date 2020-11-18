@@ -120,7 +120,7 @@ async def send(ctx, guild, channel, message):
     channel = bot.get_channel(servers[guild][channel])
     response = 'Hi, <@' + str(ctx.author.id) + '>!'
     response += 'Thanks for your message, "' + message + '".'
-    await ctx.send(response, delete_after=5)
+    await channel.send(response, delete_after=5)
 
 """
 @commands.command()
