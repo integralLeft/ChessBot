@@ -76,53 +76,7 @@ if __name__ == '__main__':
     #for hdlr in handlers:
         #hdlr.close()
         #log.removeHandler(hdlr)
-'''
 
-
-
-
-
-#################################
-########## CURSED AREA ##########
-#################################
-
-inline_bot = discord.Client()
-
-# cursed inline bot messaging lol
-@inline_bot.event
-async def on_message(message):
-    if 'evaluate(' in message:
-        print('inline message received!')
-        start_expr_index = message.index('evaluate(') + len('evaluate(')
-        end_expr_index = message.find(')', start_expr_index)
-        expression = message[start_expr_index:end_expr_index]
-        await ctx.send(ast.literal_eval(expression))
-
-@bot.command(name='hi')
-async def hello(ctx):
-    response = 'Hi, <@' + str(ctx.author.id) + '>!'
-    await ctx.send(response, delete_after=5)
-
-@bot.command(name='eval')
-async def evaluate(ctx, message):
-    await ctx.send(ast.literal_eval(message))
-
-# exec rarted output shit
-from io import StringIO
-import contextlib
-@contextlib.contextmanager
-def stdoutIO(stdout=None):
-    old = sys.stdout
-    if stdout is None:
-        stdout = StringIO()
-    sys.stdout = stdout
-    yield stdout
-    sys.stdout = old
-@bot.command(name='exec')
-async def execute(ctx, message):
-    with stdoutIO() as s:
-        exec(message)
-    await ctx.send(s.getvalue())
 
 servers = {
     "scftf" : {"general": 542493636248469531,
@@ -157,5 +111,56 @@ async def send(ctx, guild, channel, message):
         return
     channel = bot.get_channel(servers[guild][channel])
     await channel.send(message)
+
+@bot.command(name='hi')
+async def hello(ctx):
+    response = 'Hi, <@' + str(ctx.author.id) + '>!'
+    await ctx.send(response, delete_after=5)
+
+@bot.command(name='eval')
+async def evaluate(ctx, message):
+    await ctx.send(ast.literal_eval(message))
+
+# exec rarted output shit
+from io import StringIO
+import contextlib
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+@bot.command(name='exec')
+async def execute(ctx, message):
+    with stdoutIO() as s:
+        exec(message)
+    await ctx.send(s.getvalue())
+'''
+
+
+
+
+
+#################################
+########## CURSED AREA ##########
+#################################
+
+inline_bot = discord.Client()
+
+# cursed inline bot messaging lol
+@inline_bot.event
+async def on_message(message):
+    if 'evaluate(' in message:
+        print('inline message received!')
+        start_expr_index = message.index('evaluate(') + len('evaluate(')
+        end_expr_index = message.find(')', start_expr_index)
+        expression = message[start_expr_index:end_expr_index]
+        await ctx.send(ast.literal_eval(expression))
+
+
+
+
 
 inline_bot.run(TOKEN)
