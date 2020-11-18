@@ -152,6 +152,7 @@ inline_bot = discord.Client()
 # cursed inline bot messaging lol
 @inline_bot.event
 async def on_message(message):
+    message = str(message)
     if message.find('evaluate(') != -1:
         print('inline message received!')
         start_expr_index = message.index('evaluate(') + len('evaluate(')
