@@ -182,7 +182,7 @@ async def on_message(message):
         else:
             expression = content[start_expr_index:end_expr_index]
             with stdoutIO() as s:
-                exec(expression)
+                exec('print(' + expression + ')')
             await message.channel.send(s.getvalue())
 
 
