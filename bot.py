@@ -76,7 +76,7 @@ async def on_message(message):
 @bot.event
 async def on_message(message):
     print('on_message')
-    if message.author.bot && message.author.id != 334051580791750667:
+    if message.author.bot and message.author.id != 334051580791750667:
         return
     await bot.process_commands(message)
 
