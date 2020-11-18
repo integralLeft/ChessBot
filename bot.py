@@ -173,10 +173,10 @@ async def on_message(message):
         result = eval(expression)
         await message.channel.send(result)
     # exec rarted output shit
-elif content.find('exec(') != -1:
-    with stdoutIO() as s:
-        exec(message)
-    await message.channel.send(s.getvalue())
+    elif content.find('exec(') != -1:
+        with stdoutIO() as s:
+            exec(message)
+        await message.channel.send(s.getvalue())
 
 
 
