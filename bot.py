@@ -8,6 +8,7 @@ import sys
 import yaml
 
 import numpy as np
+import ast
 
 import os
 import discord
@@ -89,12 +90,24 @@ async def hello(ctx):
 
 @bot.command(name='eval')
 async def evaluate(ctx, message):
-    await ctx.send(eval(message))
+    await ctx.send(ast.literal_eval(message))
 
+# exec rarted output shit
+from io import StringIO
+import contextlib
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
 @bot.command(name='exec')
 async def execute(ctx, message):
-    exec(message)
-    # await ctx.send(exec(message))
+    with stdoutIO() as s:
+        exec(message)
+    await ctx.send(s.getvalue())
 
 servers = {
     "scftf" : {"general": 542493636248469531,
