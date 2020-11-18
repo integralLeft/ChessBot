@@ -85,11 +85,41 @@ async def hello(ctx):
     response = 'Hi, <@' + str(ctx.author.id) + '>!'
     await ctx.send(response, delete_after=5)
 
+servers = {
+    "scftf" : {"general": 542493636248469531,
+               "burner_channel" : 727054721789198357
+    },
+    "ME" : {"general" : 302953345105002496,
+            "specific" : 688805196612239429,
+            "serious" : 377935738316128256,
+            "software" : 289085592653004801,
+            "meta" : 316211369559195648,
+            "gaming" : 255071268338925568,
+            "bots" : 232245773448773633,
+            "media" : 320180014207336459,
+            "wholesome" : 484095865183797260,
+            "homework" : 606652330276028436,
+            "minecraft" : 535379067210563584,
+            "memes_disc" : 383163730453856256,
+            "pol_memes" : 686266664169373793,
+            "weeb" : 498346809295634462,
+            "meme_pit" : 263300751986655232,
+            "shitposting" : 300377971234177024,
+            "history" : 257296403435487242,
+            "events" : 303891514361118720,
+            "police" : 267150859605901314,
+            "voice" : 474798151371587610
+    }
+}
+
 @bot.command(name='send')
-async def send(ctx):
+async def send(ctx, guild, channel):
     if ctx.guild != bot.get_guild(542493635757867037):
         return
+    # message contains the arguments of channel, server
+    channel = bot.get_channel(servers[guild][channel])
     response = 'Hi, <@' + str(ctx.author.id) + '>!'
+    response += 'Thanks for your message, "' + ctx + '".'
     await ctx.send(response, delete_after=5)
 
 """
