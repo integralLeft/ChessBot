@@ -87,7 +87,7 @@ async def hello(ctx):
 
 @bot.command(name='send')
 async def send(ctx):
-    if bot.get_guild() != 542493635757867037:
+    if ctx.guild != 542493635757867037:
         return
     response = 'Hi, <@' + str(ctx.author.id) + '>!'
     await ctx.send(response, delete_after=5)
