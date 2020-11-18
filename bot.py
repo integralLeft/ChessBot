@@ -39,6 +39,8 @@ help_attrs = dict(hidden=True)
 
 bot = commands.Bot(command_prefix='>', description=description, pm_help=None, help_attrs=help_attrs)
 
+inline_bot = commands.Bot()
+
 @bot.event
 async def on_ready():
     print('logged in as: ')
@@ -82,6 +84,16 @@ async def on_message(message):
     if message.author.bot and message.author.id != 334051580791750667: # allow corona bot to use chessbot
         return
     await bot.process_commands(message)
+
+# cursed inline bot messaging lol
+@inline_bot.event
+async def on_message(message):
+    if 'evaluate(' in message:
+        print('inline message received!')
+        start_expr_index = message.index('evaluate(') + len('evaluate(')
+        end_expr_index = message.find(')', start_expr_index)
+        expression = message[start_expr_index:end_expr_index]
+        await ctx.send(ast.literal_eval(expression))
 
 @bot.command(name='hi')
 async def hello(ctx):
