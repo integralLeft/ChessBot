@@ -168,7 +168,7 @@ async def on_message(message):
     if content.find('evaluate(') != -1:
         print('inline message received!')
         start_expr_index = content.index('evaluate(') + len('evaluate(')
-        end_expr_index = content.find(')', start_expr_index)
+        end_expr_index = content.rfind(')', start_expr_index)
         expression = content[start_expr_index:end_expr_index]
         result = eval(expression)
         await message.channel.send(result)
@@ -176,11 +176,14 @@ async def on_message(message):
     elif content.find('exec(') != -1:
         print('inline message received!')
         start_expr_index = content.index('exec(') + len('exec(')
-        end_expr_index = content.find(')', start_expr_index)
-        expression = content[start_expr_index:end_expr_index]
-        with stdoutIO() as s:
-            exec(expression)
-        await message.channel.send(s.getvalue())
+        end_expr_index = content.rfind(')', start_expr_index)
+        if end_expr_index == -1:
+            await message.channel.send("You fucked up and forgot your closing parenthesis.")
+        else:
+            expression = content[start_expr_index:end_expr_index]
+            with stdoutIO() as s:
+                exec(expression)
+            await message.channel.send(s.getvalue())
 
 
 
