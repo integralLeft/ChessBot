@@ -152,12 +152,12 @@ inline_bot = discord.Client()
 # cursed inline bot messaging lol
 @inline_bot.event
 async def on_message(message):
-    message = message.content
-    if message.find('evaluate(') != -1:
+    content = message.content
+    if content.find('evaluate(') != -1:
         print('inline message received!')
-        start_expr_index = message.index('evaluate(') + len('evaluate(')
-        end_expr_index = message.find(')', start_expr_index)
-        expression = message[start_expr_index:end_expr_index]
+        start_expr_index = content.index('evaluate(') + len('evaluate(')
+        end_expr_index = content.find(')', start_expr_index)
+        expression = content[start_expr_index:end_expr_index]
         await message.channel.send(ast.literal_eval(expression))
 
 
