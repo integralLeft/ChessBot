@@ -39,7 +39,7 @@ help_attrs = dict(hidden=True)
 
 bot = commands.Bot(command_prefix='>', description=description, pm_help=None, help_attrs=help_attrs)
 
-inline_bot = commands.Bot()
+inline_bot = discord.Client()
 
 @bot.event
 async def on_ready():
