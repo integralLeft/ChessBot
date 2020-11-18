@@ -93,7 +93,8 @@ async def evaluate(ctx, message):
 
 @bot.command(name='exec')
 async def execute(ctx, message):
-    await ctx.send(exec(message))
+    exec(message)
+    # await ctx.send(exec(message))
 
 servers = {
     "scftf" : {"general": 542493636248469531,
