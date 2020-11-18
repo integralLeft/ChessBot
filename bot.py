@@ -37,9 +37,9 @@ logging.basicConfig(level=logging.WARNING)
 #log.addHandler(handler)
 help_attrs = dict(hidden=True)
 
+'''
 bot = commands.Bot(command_prefix='>', description=description, pm_help=None, help_attrs=help_attrs)
 
-inline_bot = discord.Client()
 
 @bot.event
 async def on_ready():
@@ -84,6 +84,93 @@ async def on_message(message):
     if message.author.bot and message.author.id != 334051580791750667: # allow corona bot to use chessbot
         return
     await bot.process_commands(message)
+
+
+
+"""
+@commands.command()
+async def load(extension_name : str, ctx):
+    try:
+        bot.load_extension(extension_name)
+    except (AttributeError, ImportError) as e:
+        await ctx.send("'''py\n{}; {}\n'''".format(type(e).__name__, str(e)))
+        return
+    await ctx.send("{} loaded.".format(extension_name))
+"""
+
+if __name__ == '__main__':
+    for extension in extensions:
+        try:
+            bot.load_extension(extension)
+            print(f"Loaded {extension}.")
+        except Exception as e:
+            print('Failed to load extension {}\n{}: {}'.format(extension, type(e).__name__,e))
+    bot.run(TOKEN, bot=True, reconnect=True)
+
+    #handlers = log.handlers[:]
+    #for hdlr in handlers:
+        #hdlr.close()
+        #log.removeHandler(hdlr)
+'''
+"""
+@client.event
+async def on_ready():
+    guild = discord.utils.get(client.guilds, name=GUILD)
+    print(
+        f'{client.user} is connected to the following guild:\n'
+        f'{guild.name}(id: {guild.id})'
+)
+"""
+
+
+"""
+
+def eval(s,op):
+    lst = []
+    for i in s:
+        if i.isnumeric():
+            lst.append(int(i))
+    if op == 'add':
+        return sum(lst)
+    elif op == 'mult':
+        result = 1
+        for i in lst:
+            result *= i
+        return result
+
+@client.event
+async def on_message(message):
+    if message.author == client.user:
+        return
+    cmddict = {'greet':'Hi, ' + message.author.name + '!',
+               'gay':'no u',
+               'm!':'haha yes very funny',
+               'fuck':'wow haha i am dying of laughter',
+               'daily':'wrong prefix idiot. not tatsumaki smdh',
+               '':"that's not a command dumbass, that's the absence of a command. smdh",
+               'help':'Commands:\n\t1. greet (prints a greeting)\n\t2. gay (no u)\n\t3. add (adds ints in input)\n\t4. mult (multiplies ints in input)'}
+    prefix = 'm!'
+    if message.content[:len(prefix)] == prefix:
+        body = message.content[len(prefix):]
+        if body[:3] == 'add':
+            response = eval(message.content, 'add')
+        elif body[:4] == 'mult':
+            response = eval(message.content, 'mult')
+        elif body not in cmddict:
+            response = 'enter a valid command dumbass'
+        else:
+            response = cmddict[body]
+        await message.channel.send(response)
+
+client.run(TOKEN)
+#bot.run(TOKEN)
+"""
+
+#################################
+########## CURSED AREA ##########
+#################################
+
+inline_bot = discord.Client()
 
 # cursed inline bot messaging lol
 @inline_bot.event
@@ -155,81 +242,4 @@ async def send(ctx, guild, channel, message):
     channel = bot.get_channel(servers[guild][channel])
     await channel.send(message)
 
-"""
-@commands.command()
-async def load(extension_name : str, ctx):
-    try:
-        bot.load_extension(extension_name)
-    except (AttributeError, ImportError) as e:
-        await ctx.send("'''py\n{}; {}\n'''".format(type(e).__name__, str(e)))
-        return
-    await ctx.send("{} loaded.".format(extension_name))
-"""
-
-if __name__ == '__main__':
-    for extension in extensions:
-        try:
-            bot.load_extension(extension)
-            print(f"Loaded {extension}.")
-        except Exception as e:
-            print('Failed to load extension {}\n{}: {}'.format(extension, type(e).__name__,e))
-    bot.run(TOKEN, bot=True, reconnect=True)
-
-    #handlers = log.handlers[:]
-    #for hdlr in handlers:
-        #hdlr.close()
-        #log.removeHandler(hdlr)
-
-"""
-@client.event
-async def on_ready():
-    guild = discord.utils.get(client.guilds, name=GUILD)
-    print(
-        f'{client.user} is connected to the following guild:\n'
-        f'{guild.name}(id: {guild.id})'
-)
-"""
-
-
-"""
-
-def eval(s,op):
-    lst = []
-    for i in s:
-        if i.isnumeric():
-            lst.append(int(i))
-    if op == 'add':
-        return sum(lst)
-    elif op == 'mult':
-        result = 1
-        for i in lst:
-            result *= i
-        return result
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    cmddict = {'greet':'Hi, ' + message.author.name + '!',
-               'gay':'no u',
-               'm!':'haha yes very funny',
-               'fuck':'wow haha i am dying of laughter',
-               'daily':'wrong prefix idiot. not tatsumaki smdh',
-               '':"that's not a command dumbass, that's the absence of a command. smdh",
-               'help':'Commands:\n\t1. greet (prints a greeting)\n\t2. gay (no u)\n\t3. add (adds ints in input)\n\t4. mult (multiplies ints in input)'}
-    prefix = 'm!'
-    if message.content[:len(prefix)] == prefix:
-        body = message.content[len(prefix):]
-        if body[:3] == 'add':
-            response = eval(message.content, 'add')
-        elif body[:4] == 'mult':
-            response = eval(message.content, 'mult')
-        elif body not in cmddict:
-            response = 'enter a valid command dumbass'
-        else:
-            response = cmddict[body]
-        await message.channel.send(response)
-
-client.run(TOKEN)
-#bot.run(TOKEN)
-"""
+inline_bot.run(TOKEN)
