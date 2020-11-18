@@ -7,6 +7,8 @@ import traceback
 import sys
 import yaml
 
+import numpy as np
+
 import os
 import discord
 from dotenv import load_dotenv
@@ -76,7 +78,7 @@ async def on_message(message):
 @bot.event
 async def on_message(message):
     print('on_message')
-    if message.author.bot and message.author.id != 334051580791750667:
+    if message.author.bot and message.author.id != 334051580791750667: # allow corona bot to use chessbot
         return
     await bot.process_commands(message)
 
@@ -84,6 +86,14 @@ async def on_message(message):
 async def hello(ctx):
     response = 'Hi, <@' + str(ctx.author.id) + '>!'
     await ctx.send(response, delete_after=5)
+
+@bot.command(name='eval')
+async def evaluate(ctx, message):
+    await ctx.send(eval(message))
+
+@bot.command(name='exec')
+async def execute(ctx, message):
+    await ctx.send(exec(message))
 
 servers = {
     "scftf" : {"general": 542493636248469531,
