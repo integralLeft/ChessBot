@@ -10,6 +10,9 @@ import yaml
 import numpy as np
 import ast
 
+from io import StringIO
+import contextlib
+
 import os
 import discord
 from dotenv import load_dotenv
@@ -149,6 +152,15 @@ async def execute(ctx, message):
 
 inline_bot = discord.Client()
 
+@contextlib.contextmanager
+def stdoutIO(stdout=None):
+    old = sys.stdout
+    if stdout is None:
+        stdout = StringIO()
+    sys.stdout = stdout
+    yield stdout
+    sys.stdout = old
+
 # cursed inline bot messaging lol
 @inline_bot.event
 async def on_message(message):
@@ -160,8 +172,11 @@ async def on_message(message):
         expression = content[start_expr_index:end_expr_index]
         result = eval(expression)
         await message.channel.send(result)
-
-
+    # exec rarted output shit
+elif content.find('exec(') != -1:
+    with stdoutIO() as s:
+        exec(message)
+    await message.channel.send(s.getvalue())
 
 
 
