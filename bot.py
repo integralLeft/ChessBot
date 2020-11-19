@@ -94,6 +94,10 @@ servers = {
             "events" : 303891514361118720,
             "police" : 267150859605901314,
             "voice" : 474798151371587610
+    },
+    "MW" : {"general" : 571070686794088469,
+            "bs" : 571072745081929728,
+            "chess" : 580495157221130259
     }
 }
 
@@ -138,7 +142,7 @@ if __name__ == '__main__':
         except Exception as e:
             print('Failed to load extension {}\n{}: {}'.format(extension, type(e).__name__,e))
     bot.run(TOKEN, bot=True, reconnect=True)
-    
+
 '''
 
 
