@@ -42,7 +42,7 @@ logging.basicConfig(level=logging.WARNING)
 #log.addHandler(handler)
 help_attrs = dict(hidden=True)
 
-'''
+
 bot = commands.Bot(command_prefix='>', description=description, pm_help=None, help_attrs=help_attrs)
 
 
@@ -190,3 +190,4 @@ async def on_message(message):
 
 
 inline_bot.run(TOKEN)
+'''
