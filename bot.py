@@ -64,19 +64,6 @@ async def on_message(message):
         return
     await bot.process_commands(message)
 
-
-
-
-
-if __name__ == '__main__':
-    for extension in extensions:
-        try:
-            bot.load_extension(extension)
-            print(f"Loaded {extension}.")
-        except Exception as e:
-            print('Failed to load extension {}\n{}: {}'.format(extension, type(e).__name__,e))
-    bot.run(TOKEN, bot=True, reconnect=True)
-
     #handlers = log.handlers[:]
     #for hdlr in handlers:
         #hdlr.close()
@@ -142,10 +129,17 @@ async def execute(ctx, message):
     with stdoutIO() as s:
         exec(message)
     await ctx.send(s.getvalue())
+
+if __name__ == '__main__':
+    for extension in extensions:
+        try:
+            bot.load_extension(extension)
+            print(f"Loaded {extension}.")
+        except Exception as e:
+            print('Failed to load extension {}\n{}: {}'.format(extension, type(e).__name__,e))
+    bot.run(TOKEN, bot=True, reconnect=True)
+    
 '''
-
-
-
 
 
 #################################
